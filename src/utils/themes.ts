@@ -3,6 +3,7 @@ export const defaultTheme = {
     dark: '#33313b',
     light: '#f6f5f5',
     main: '#4592af',
-    secondary: '#e3c4a8'
+    secondary: '#e3c4a8',
+    gray: '#eee'
   }
 };
