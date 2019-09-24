@@ -1,9 +1,9 @@
 import { Product } from '../../models/product';
 
-export interface ProductsState {
+export interface IProductsState {
   productList: Product[];
 }
 
-export interface ProductsAction {
+export interface IProductsAction {
   type: string;
 }

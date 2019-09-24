@@ -3,18 +3,23 @@ import { Product } from '../../models/product';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 
-export interface CartState {
-  cartList: Product[];
+export interface ICartItem {
+  product: Product;
+  qty: number;
 }
 
-export interface AddToCartAction {
+export interface ICartState {
+  cartList: ICartItem[];
+}
+
+export interface IAddToCartAction {
   type: typeof ADD_TO_CART;
-  payload: Product;
+  product: Product;
 }
 
-export interface RemoveFromCartAction {
+export interface IRemoveFromCartAction {
   type: typeof REMOVE_FROM_CART;
-  payload: string;
+  id: string;
 }
 
-export type CartAction = AddToCartAction | RemoveFromCartAction;
+export type CartAction = IAddToCartAction | IRemoveFromCartAction;

@@ -1,4 +1,5 @@
 import { createStore, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import products from './products/reducer';
 import cart from './cart/reducer';
@@ -10,4 +11,4 @@ const rootReducer = combineReducers({
 
 export type AppState = ReturnType<typeof rootReducer>;
 
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, composeWithDevTools());

@@ -1,17 +1,17 @@
 import { Product } from '../../models/product';
 import {
-  AddToCartAction,
-  RemoveFromCartAction,
+  IAddToCartAction,
+  IRemoveFromCartAction,
   ADD_TO_CART,
   REMOVE_FROM_CART
 } from './types';
 
-export const addToCart = (product: Product): AddToCartAction => ({
+export const addToCart = (product: Product): IAddToCartAction => ({
   type: ADD_TO_CART,
-  payload: product
+  product
 });
 
-export const removeFromCart = (id: string): RemoveFromCartAction => ({
+export const removeFromCart = (id: string): IRemoveFromCartAction => ({
   type: REMOVE_FROM_CART,
-  payload: id
+  id
 });

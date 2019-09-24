@@ -6,5 +6,5 @@ export const defaultStackNavigationOptions: NavigationStackOptions = {
   headerStyle: {
     backgroundColor: defaultTheme.colors.dark
   },
-  headerTintColor: defaultTheme.colors.light
+  headerTintColor: defaultTheme.colors.secondary
 };

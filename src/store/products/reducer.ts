@@ -1,14 +1,14 @@
-import { ProductsState, ProductsAction } from './types';
+import { IProductsState, IProductsAction } from './types';
 
 import PRODUCTS from '../../utils/data';
 
-const initialState: ProductsState = {
+const initialState: IProductsState = {
   productList: PRODUCTS
 };
 
 export default (
-  state: ProductsState = initialState,
-  action: ProductsAction
-): ProductsState => {
+  state: IProductsState = initialState,
+  action: IProductsAction
+): IProductsState => {
   return state;
 };
