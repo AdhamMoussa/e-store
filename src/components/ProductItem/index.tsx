@@ -16,15 +16,17 @@ import { styles } from './styles';
 
 interface IProps {
   product: Product;
+  navigateToProductScreen: () => void;
 }
 
 const ProductItem: React.FC<IProps> = props => {
   const {
-    product: { title, imageUrl, price }
+    product: { title, imageUrl, price },
+    navigateToProductScreen
   } = props;
 
   return (
-    <TouchableNativeFeedback onPress={() => Alert.alert('details')}>
+    <TouchableNativeFeedback onPress={navigateToProductScreen} useForeground>
       <View style={styles.card}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
 
