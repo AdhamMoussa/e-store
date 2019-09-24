@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, Image, Button } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 
+import HeaderButtonCart from '../../components/HeaderButtonCart';
+
 import { Product } from '../../models/product';
 
 import { defaultTheme } from '../../utils/themes';
@@ -37,7 +39,17 @@ ProductScreen.navigationOptions = navProps => {
   const product: Product = navProps.navigation.getParam('product');
 
   return {
-    headerTitle: product.title
+    headerTitle: product.title,
+
+    headerRight: (
+      <HeaderButtonCart
+        onPress={() => {
+          navProps.navigation.navigate({
+            routeName: 'Cart'
+          });
+        }}
+      />
+    )
   };
 };
 

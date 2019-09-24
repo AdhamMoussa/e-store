@@ -17,12 +17,14 @@ import { styles } from './styles';
 interface IProps {
   product: Product;
   navigateToProductScreen: () => void;
+  addToCart: () => void;
 }
 
 const ProductItem: React.FC<IProps> = props => {
   const {
     product: { title, imageUrl, price },
-    navigateToProductScreen
+    navigateToProductScreen,
+    addToCart
   } = props;
 
   return (
@@ -42,7 +44,7 @@ const ProductItem: React.FC<IProps> = props => {
             <Button
               title="Add to Cart"
               color={defaultTheme.colors.dark}
-              onPress={() => Alert.alert('add to cart')}
+              onPress={addToCart}
             />
           </View>
         </View>

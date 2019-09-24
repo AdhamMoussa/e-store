@@ -1,11 +1,14 @@
 import React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import ProductItem from '../../components/ProductItem';
+import HeaderButtonCart from '../../components/HeaderButtonCart';
 
 import { AppState } from '../../store';
+import { addToCart } from '../../store/cart/actions';
+
 import { Product } from '../../models/product';
 
 import { styles } from './styles';
@@ -13,11 +16,17 @@ import { styles } from './styles';
 const ShopScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const { productList } = useSelector((state: AppState) => state.products);
 
+  const dispatch = useDispatch();
+
   const navigateToProductScreen = (product: Product): void => {
     navigation.navigate({
       routeName: 'Product',
       params: { product }
     });
+  };
+
+  const addToCartHandler = (product: Product): void => {
+    dispatch(addToCart(product));
   };
 
   return (
@@ -27,6 +36,9 @@ const ShopScreen: NavigationStackScreenComponent = ({ navigation }) => {
         renderItem={({ item }) => (
           <ProductItem
             product={item}
+            addToCart={() => {
+              addToCartHandler(item);
+            }}
             navigateToProductScreen={() => {
               navigateToProductScreen(item);
             }}
@@ -38,8 +50,18 @@ const ShopScreen: NavigationStackScreenComponent = ({ navigation }) => {
   );
 };
 
-ShopScreen.navigationOptions = {
-  headerTitle: 'All Products'
-};
+ShopScreen.navigationOptions = navProps => ({
+  headerTitle: 'All Products',
+
+  headerRight: (
+    <HeaderButtonCart
+      onPress={() => {
+        navProps.navigation.navigate({
+          routeName: 'Cart'
+        });
+      }}
+    />
+  )
+});
 
 export default ShopScreen;

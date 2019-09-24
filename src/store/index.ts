@@ -1,9 +1,11 @@
 import { createStore, combineReducers } from 'redux';
 
 import products from './products/reducer';
+import cart from './cart/reducer';
 
 const rootReducer = combineReducers({
-  products
+  products,
+  cart
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
