@@ -7,9 +7,10 @@ import { defaultTheme } from '../../utils/themes';
 
 interface IProps {
   total: number;
+  onCheckout: () => void;
 }
 
-const CartItemTotals: React.FC<IProps> = ({ total }) => {
+const CartItemTotals: React.FC<IProps> = ({ total, onCheckout }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Total Amount</Text>
@@ -19,8 +20,8 @@ const CartItemTotals: React.FC<IProps> = ({ total }) => {
       <View style={styles.btn}>
         <Button
           title="Checkout"
-          color={defaultTheme.colors.dark}
-          onPress={() => {}}
+          color={defaultTheme.colors.main}
+          onPress={onCheckout}
         />
       </View>
     </View>

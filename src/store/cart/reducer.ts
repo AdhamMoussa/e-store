@@ -1,4 +1,10 @@
-import { ICartState, CartAction, ADD_TO_CART, REMOVE_FROM_CART } from './types';
+import {
+  ICartState,
+  CartAction,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART
+} from './types';
 
 const initialState: ICartState = {
   cartList: []
@@ -40,6 +46,9 @@ export default (
       return {
         cartList: state.cartList.filter(item => item.product.id !== action.id)
       };
+
+    case CLEAR_CART:
+      return initialState;
 
     default:
       return state;

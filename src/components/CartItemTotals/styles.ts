@@ -5,7 +5,7 @@ import { defaultTheme } from '../../utils/themes';
 export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    padding: 25,
+    padding: 15,
     justifyContent: 'space-evenly',
     height: '100%'
   },
@@ -13,13 +13,14 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: defaultTheme.colors.dark
+    color: defaultTheme.colors.light
   },
   amount: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: defaultTheme.colors.main
+    color: defaultTheme.colors.secondary,
+    marginBottom: 15
   },
   btn: {
     width: '70%'

@@ -7,23 +7,24 @@ export const styles = StyleSheet.create({
     backgroundColor: defaultTheme.colors.gray,
     margin: 15,
     elevation: 3,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'stretch'
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     color: defaultTheme.colors.dark
   },
-  price: {
+  total: {
     fontSize: 16,
     fontWeight: 'bold',
     color: defaultTheme.colors.main
   },
+  price: {},
   quantity: {},
-  total: {},
   imageContainer: {
-    width: 60,
-    height: 60,
+    width: 104,
+    height: 104,
     flexGrow: 0,
     flexShrink: 0
   },
@@ -35,9 +36,9 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'space-between',
-    paddingHorizontal: 10
+    padding: 10
   },
   info: {
     marginRight: 15,

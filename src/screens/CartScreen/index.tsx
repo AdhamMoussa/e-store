@@ -1,13 +1,16 @@
 import React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList, Text } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
+import uuid from 'uuid';
 
 import CartItem from '../../components/CartItem';
 import CartItemTotals from '../../components/CartItemTotals';
+import EmptyMsg from '../../components/EmptyMsg';
 
 import { AppState } from '../../store';
-import { removeFromCart } from '../../store/cart/actions';
+import { removeFromCart, clearCart } from '../../store/cart/actions';
+import { addOrder } from '../../store/orders/actions';
 import { ICartItem } from '../../store/cart/types';
 
 import { Product } from '../../models/product';
@@ -28,6 +31,19 @@ const CartScreen: NavigationStackScreenComponent = ({ navigation }) => {
     dispatch(removeFromCart(id));
   };
 
+  const checkoutHandler = () => {
+    dispatch(
+      addOrder({
+        id: uuid(),
+        date: new Date(),
+        items: cartList,
+        totalPrice: totalCartAmount
+      })
+    );
+
+    dispatch(clearCart());
+  };
+
   const navigateToProductScreen = (product: Product): void => {
     navigation.navigate({
       routeName: 'Product',
@@ -35,8 +51,12 @@ const CartScreen: NavigationStackScreenComponent = ({ navigation }) => {
     });
   };
 
+  if (cartList.length === 0) {
+    return <EmptyMsg>No Items Added...</EmptyMsg>;
+  }
+
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.cartList}>
         <FlatList
           data={cartList}
@@ -56,7 +76,7 @@ const CartScreen: NavigationStackScreenComponent = ({ navigation }) => {
       </View>
 
       <View style={styles.cartTotals}>
-        <CartItemTotals total={totalCartAmount} />
+        <CartItemTotals total={totalCartAmount} onCheckout={checkoutHandler} />
       </View>
     </View>
   );

@@ -4,6 +4,7 @@ export const defaultTheme = {
     light: '#f6f5f5',
     main: '#4592af',
     secondary: '#e3c4a8',
-    gray: '#eee'
+    gray: '#eee',
+    darkGray: '#a5a5a5'
   }
 };
