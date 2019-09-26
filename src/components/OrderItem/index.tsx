@@ -27,7 +27,7 @@ const OrderItem: React.FC<IProps> = props => {
   return (
     <View style={styles.card}>
       <Text style={styles.date}>
-        {dateFns.format(order.date, 'mm/dd/yyyy')}
+        {dateFns.format(order.date, 'MMM, dd, yyyy')}
       </Text>
 
       <Text numberOfLines={1} style={styles.id}>

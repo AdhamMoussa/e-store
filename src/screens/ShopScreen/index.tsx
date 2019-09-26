@@ -12,6 +12,7 @@ import { addToCart } from '../../store/cart/actions';
 import { Product } from '../../models/product';
 
 import { styles } from './styles';
+import HeaderButtonMenu from '../../components/HeaderButtonMenu';
 
 const ShopScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const { productList } = useSelector((state: AppState) => state.products);
@@ -59,6 +60,13 @@ ShopScreen.navigationOptions = navProps => ({
         navProps.navigation.navigate({
           routeName: 'Cart'
         });
+      }}
+    />
+  ),
+  headerLeft: () => (
+    <HeaderButtonMenu
+      onPress={() => {
+        navProps.navigation.toggleDrawer();
       }}
     />
   )

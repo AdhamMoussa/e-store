@@ -1,3 +1,4 @@
+import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
@@ -6,27 +7,41 @@ import { OrdersNavigator } from './OrdersNavigator';
 import { MyProductsNavigator } from './MyProductsNavigator';
 
 import { defaultTheme } from '../utils/themes';
+import { Ionicons } from '@expo/vector-icons';
 
 const MainNavigator = createDrawerNavigator(
   {
     Shop: {
       screen: ShopNavigator,
       navigationOptions: {
-        drawerLabel: 'Shop'
+        drawerLabel: 'Shop',
+        drawerIcon: draweConfig => (
+          <Ionicons name="md-cart" size={23} color={draweConfig.tintColor} />
+        )
       }
     },
 
     Orders: {
       screen: OrdersNavigator,
       navigationOptions: {
-        drawerLabel: 'My Orders'
+        drawerLabel: 'My Orders',
+        drawerIcon: draweConfig => (
+          <Ionicons name="md-list" size={23} color={draweConfig.tintColor} />
+        )
       }
     },
 
     MyProducts: {
       screen: MyProductsNavigator,
       navigationOptions: {
-        drawerLabel: 'My Products'
+        drawerLabel: 'My Products',
+        drawerIcon: draweConfig => (
+          <Ionicons
+            name="md-business"
+            size={23}
+            color={draweConfig.tintColor}
+          />
+        )
       }
     }
   },
