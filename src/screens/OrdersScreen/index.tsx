@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 import OrderItem from '../../components/OrderItem';
 import EmptyMsg from '../../components/EmptyMsg';
+import HeaderButtonMenu from '../../components/HeaderButtonMenu';
 
 import { AppState } from '../../store';
 
@@ -26,8 +27,15 @@ const OrdersScreen: NavigationStackScreenComponent = () => {
   );
 };
 
-OrdersScreen.navigationOptions = {
-  headerTitle: 'My Orders'
-};
+OrdersScreen.navigationOptions = navProps => ({
+  headerTitle: 'My Orders',
+  headerLeft: () => (
+    <HeaderButtonMenu
+      onPress={() => {
+        navProps.navigation.toggleDrawer();
+      }}
+    />
+  )
+});
 
 export default OrdersScreen;

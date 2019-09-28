@@ -1,13 +1,31 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
+import uuid from 'uuid';
 
-const AddProductScreen: NavigationStackScreenComponent = () => {
-  return (
-    <View>
-      <Text>Add Product</Text>
-    </View>
-  );
+import ProductForm, { IFormState } from '../../components/ProductForm';
+
+import { addProduct } from '../../store/products/actions';
+
+const AddProductScreen: NavigationStackScreenComponent = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  const submitHandler = (formState: IFormState) => {
+    dispatch(
+      addProduct({
+        title: formState.title,
+        price: Number(formState.price),
+        imageUrl: formState.imageUrl,
+        description: formState.description,
+        id: uuid(),
+        userId: 'u1'
+      })
+    );
+
+    navigation.goBack();
+  };
+
+  return <ProductForm submitHandler={submitHandler} />;
 };
 
 AddProductScreen.navigationOptions = {
