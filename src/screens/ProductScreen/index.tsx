@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, Image, Button } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
+import { useDispatch } from 'react-redux';
 
 import HeaderButtonCart from '../../components/HeaderButtonCart';
+
+import { addToCart } from '../../store/cart/actions';
 
 import { Product } from '../../models/product';
 
@@ -12,6 +15,8 @@ import { styles } from './styles';
 
 const ProductScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const product: Product = navigation.getParam('product');
+
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -28,7 +33,9 @@ const ProductScreen: NavigationStackScreenComponent = ({ navigation }) => {
         <Button
           title="Add to Cart"
           color={defaultTheme.colors.dark}
-          onPress={() => ''}
+          onPress={() => {
+            dispatch(addToCart(product));
+          }}
         />
       </View>
     </View>

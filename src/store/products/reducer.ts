@@ -2,7 +2,8 @@ import {
   IProductsState,
   IProductsAction,
   ADD_PRODUCT,
-  EDIT_PRODUCT
+  EDIT_PRODUCT,
+  DELETE_PRODUCT
 } from './types';
 
 import PRODUCTS from '../../utils/data';
@@ -22,6 +23,9 @@ const switchProduct = (arr: Product[], updatedProduct: Product): Product[] => {
     return product;
   });
 };
+const removeProduct = (arr: Product[], productId: Product['id']): Product[] => {
+  return arr.filter(product => product.id !== productId);
+};
 
 export default (
   state: IProductsState = initialState,
@@ -38,6 +42,12 @@ export default (
       return {
         productList: switchProduct(state.productList, action.product),
         userProducts: switchProduct(state.userProducts, action.product)
+      };
+
+    case DELETE_PRODUCT:
+      return {
+        productList: removeProduct(state.productList, action.productId),
+        userProducts: removeProduct(state.userProducts, action.productId)
       };
 
     default:

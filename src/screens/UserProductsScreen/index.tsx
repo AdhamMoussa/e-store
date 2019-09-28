@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButtonMenu from '../../components/HeaderButtonMenu';
@@ -9,17 +9,24 @@ import CustomHeaderButton from '../../components/HeaderButton';
 import UserProductItem from '../../components/UserProductItem';
 
 import { AppState } from '../../store';
+import { deleteProduct } from '../../store/products/actions';
 
 import { defaultTheme } from '../../utils/themes';
 
 const UserProductsScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const { userProducts } = useSelector((state: AppState) => state.products);
 
+  const dispatch = useDispatch();
+
   const editPressHandler = (productId: string): void => {
     navigation.navigate({
       routeName: 'EditProduct',
       params: { productId }
     });
+  };
+
+  const deletePressHandler = (productId: string): void => {
+    dispatch(deleteProduct(productId));
   };
 
   return (
@@ -33,7 +40,9 @@ const UserProductsScreen: NavigationStackScreenComponent = ({ navigation }) => {
             onEdit={() => {
               editPressHandler(item.id);
             }}
-            onDelete={() => {}}
+            onDelete={() => {
+              deletePressHandler(item.id);
+            }}
           />
         )}
       />
