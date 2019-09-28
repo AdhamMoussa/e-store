@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, Alert } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -26,7 +26,19 @@ const UserProductsScreen: NavigationStackScreenComponent = ({ navigation }) => {
   };
 
   const deletePressHandler = (productId: string): void => {
-    dispatch(deleteProduct(productId));
+    Alert.alert('Delete Product', 'Are you sure?', [
+      {
+        text: 'No',
+        style: 'cancel'
+      },
+      {
+        text: 'Yes',
+        style: 'default',
+        onPress: () => {
+          dispatch(deleteProduct(productId));
+        }
+      }
+    ]);
   };
 
   return (
