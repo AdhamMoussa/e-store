@@ -1,22 +1,26 @@
-import React from 'react';
-import { View, Text, FlatList, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, FlatList, Alert } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { ThunkDispatch } from 'redux-thunk';
 
 import HeaderButtonMenu from '../../components/HeaderButtonMenu';
 import CustomHeaderButton from '../../components/HeaderButton';
 import UserProductItem from '../../components/UserProductItem';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
-import { AppState } from '../../store';
-import { deleteProduct } from '../../store/products/actions';
+import { AppState, ActionsType } from '../../store';
+import { apiDeleteProduct } from '../../store/products/operations';
 
 import { defaultTheme } from '../../utils/themes';
 
 const UserProductsScreen: NavigationStackScreenComponent = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { userProducts } = useSelector((state: AppState) => state.products);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<AppState, null, ActionsType>>();
 
   const editPressHandler = (productId: string): void => {
     navigation.navigate({
@@ -35,11 +39,26 @@ const UserProductsScreen: NavigationStackScreenComponent = ({ navigation }) => {
         text: 'Yes',
         style: 'default',
         onPress: () => {
-          dispatch(deleteProduct(productId));
+          setIsLoading(true);
+
+          dispatch(apiDeleteProduct(productId))
+            .then(() => {
+              setIsLoading(false);
+              navigation.goBack();
+            })
+
+            .catch(() => {
+              setIsLoading(false);
+              Alert.alert('Error', 'Could not delete product. try again!');
+            });
         }
       }
     ]);
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <View>

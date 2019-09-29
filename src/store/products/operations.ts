@@ -1,7 +1,7 @@
 import { ThunkAction } from 'redux-thunk';
 
 import { api } from '../../utils/axiosInstance';
-import { getProducts, addProduct } from './actions';
+import { getProducts, addProduct, editProduct, deleteProduct } from './actions';
 
 import { IProductsAction, IProductUserInput } from './types';
 import { Product } from '../../models/product';
@@ -53,4 +53,35 @@ export const apiAddProduct = (
       userId: 'u1'
     })
   );
+};
+
+export const apiEditProduct = (
+  product: Product
+): ThunkAction<
+  Promise<void>,
+  AppState,
+  null,
+  IProductsAction
+> => async dispatch => {
+  await api().patch(`/products/${product.id}.json`, <IProductUserInput>{
+    title: product.title,
+    description: product.description,
+    imageUrl: product.imageUrl,
+    price: product.price
+  });
+
+  dispatch(editProduct({ ...product }));
+};
+
+export const apiDeleteProduct = (
+  id: Product['id']
+): ThunkAction<
+  Promise<void>,
+  AppState,
+  null,
+  IProductsAction
+> => async dispatch => {
+  await api().delete(`/products/${id}.json`);
+
+  dispatch(deleteProduct(id));
 };
