@@ -1,29 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
-import uuid from 'uuid';
 
 import ProductForm, { IFormState } from '../../components/ProductForm';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
-import { addProduct } from '../../store/products/actions';
+import { AppState, ActionsType } from '../../store';
+import { apiAddProduct } from '../../store/products/operations';
+import { ThunkDispatch } from 'redux-thunk';
+import { Alert } from 'react-native';
 
 const AddProductScreen: NavigationStackScreenComponent = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch<ThunkDispatch<AppState, any, ActionsType>>();
 
   const submitHandler = (formState: IFormState) => {
     dispatch(
-      addProduct({
+      apiAddProduct({
         title: formState.title,
         price: Number(formState.price),
         imageUrl: formState.imageUrl,
-        description: formState.description,
-        id: uuid(),
-        userId: 'u1'
+        description: formState.description
       })
-    );
+    )
+      .then(() => {
+        setIsLoading(false);
+        navigation.goBack();
+      })
 
-    navigation.goBack();
+      .catch(() => {
+        setIsLoading(false);
+        Alert.alert('Error', 'Could not add product. try again!');
+      });
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return <ProductForm submitHandler={submitHandler} />;
 };

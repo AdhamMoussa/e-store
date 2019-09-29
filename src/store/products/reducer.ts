@@ -3,15 +3,15 @@ import {
   IProductsAction,
   ADD_PRODUCT,
   EDIT_PRODUCT,
-  DELETE_PRODUCT
+  DELETE_PRODUCT,
+  GET_PRODUCTS
 } from './types';
 
-import PRODUCTS from '../../utils/data';
 import { Product } from '../../models/product';
 
 const initialState: IProductsState = {
-  productList: PRODUCTS,
-  userProducts: [PRODUCTS[0]]
+  productList: [],
+  userProducts: []
 };
 
 const switchProduct = (arr: Product[], updatedProduct: Product): Product[] => {
@@ -32,20 +32,31 @@ export default (
   action: IProductsAction
 ): IProductsState => {
   switch (action.type) {
+    case GET_PRODUCTS:
+      return {
+        productList: action.productList,
+        userProducts: action.productList.filter(
+          product => product.userId === 'u1'
+        )
+      };
+
     case ADD_PRODUCT:
       return {
+        ...state,
         productList: state.productList.concat([action.product]),
         userProducts: state.userProducts.concat([action.product])
       };
 
     case EDIT_PRODUCT:
       return {
+        ...state,
         productList: switchProduct(state.productList, action.product),
         userProducts: switchProduct(state.userProducts, action.product)
       };
 
     case DELETE_PRODUCT:
       return {
+        ...state,
         productList: removeProduct(state.productList, action.productId),
         userProducts: removeProduct(state.userProducts, action.productId)
       };

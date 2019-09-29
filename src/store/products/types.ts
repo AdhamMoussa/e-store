@@ -1,5 +1,6 @@
 import { Product } from '../../models/product';
 
+export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
@@ -7,6 +8,19 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export interface IProductsState {
   productList: Product[];
   userProducts: Product[];
+}
+
+export interface IProductUserInput {
+  title: string;
+  description: string;
+  price: number;
+  imageUrl: string;
+}
+
+// ACTION types
+export interface IGetProductsAction {
+  type: typeof GET_PRODUCTS;
+  productList: Product[];
 }
 
 export interface IAddProductAction {
@@ -25,6 +39,7 @@ export interface IDeleteProductAction {
 }
 
 export type IProductsAction =
+  | IGetProductsAction
   | IAddProductAction
   | IEditProductAction
   | IDeleteProductAction;
