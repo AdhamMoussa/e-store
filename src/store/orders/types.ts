@@ -9,6 +9,12 @@ export interface IOrder {
   date: Date;
 }
 
+export interface IPartialOrder {
+  items: ICartItem[];
+  totalPrice: number;
+  date: Date;
+}
+
 export interface IOrdersState {
   orderList: IOrder[];
 }

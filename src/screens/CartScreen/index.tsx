@@ -1,16 +1,17 @@
-import React from 'react';
-import { View, FlatList, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, FlatList, Alert } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
-import uuid from 'uuid';
+import { ThunkDispatch } from 'redux-thunk';
 
 import CartItem from '../../components/CartItem';
 import CartItemTotals from '../../components/CartItemTotals';
 import EmptyMsg from '../../components/EmptyMsg';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
-import { AppState } from '../../store';
+import { AppState, ActionsType } from '../../store';
 import { removeFromCart, clearCart } from '../../store/cart/actions';
-import { addOrder } from '../../store/orders/actions';
+import { apiAddOrder } from '../../store/orders/operations';
 import { ICartItem } from '../../store/cart/types';
 
 import { Product } from '../../models/product';
@@ -18,9 +19,11 @@ import { Product } from '../../models/product';
 import { styles } from './styles';
 
 const CartScreen: NavigationStackScreenComponent = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { cartList } = useSelector((state: AppState) => state.cart);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<AppState, null, ActionsType>>();
 
   const totalCartAmount: number = cartList.reduce(
     (a: number, b: ICartItem): number => a + b.product.price * b.qty,
@@ -32,16 +35,25 @@ const CartScreen: NavigationStackScreenComponent = ({ navigation }) => {
   };
 
   const checkoutHandler = () => {
+    setIsLoading(true);
+
     dispatch(
-      addOrder({
-        id: uuid(),
+      apiAddOrder({
         date: new Date(),
         items: cartList,
         totalPrice: totalCartAmount
       })
-    );
+    )
+      .then(() => {
+        dispatch(clearCart());
+        setIsLoading(false);
+        Alert.alert('Success', 'Your order is sent successfully..');
+      })
 
-    dispatch(clearCart());
+      .catch(() => {
+        setIsLoading(false);
+        Alert.alert('Error', 'Could not send your order!! try again');
+      });
   };
 
   const navigateToProductScreen = (product: Product): void => {
@@ -50,6 +62,10 @@ const CartScreen: NavigationStackScreenComponent = ({ navigation }) => {
       params: { product }
     });
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (cartList.length === 0) {
     return <EmptyMsg>No Items Added...</EmptyMsg>;
