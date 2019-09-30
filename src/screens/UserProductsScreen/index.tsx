@@ -3,14 +3,13 @@ import { View, FlatList, Alert } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { ThunkDispatch } from 'redux-thunk';
 
 import HeaderButtonMenu from '../../components/HeaderButtonMenu';
 import CustomHeaderButton from '../../components/HeaderButton';
 import UserProductItem from '../../components/UserProductItem';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-import { AppState, ActionsType } from '../../store';
+import { AppState, ThunkDispatchType } from '../../store';
 import { apiDeleteProduct } from '../../store/products/operations';
 
 import { defaultTheme } from '../../utils/themes';
@@ -20,7 +19,7 @@ const UserProductsScreen: NavigationStackScreenComponent = ({ navigation }) => {
 
   const { userProducts } = useSelector((state: AppState) => state.products);
 
-  const dispatch = useDispatch<ThunkDispatch<AppState, null, ActionsType>>();
+  const dispatch = useDispatch<ThunkDispatchType>();
 
   const editPressHandler = (productId: string): void => {
     navigation.navigate({

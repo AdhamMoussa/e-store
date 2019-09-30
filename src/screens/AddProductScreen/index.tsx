@@ -5,15 +5,14 @@ import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import ProductForm, { IFormState } from '../../components/ProductForm';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-import { AppState, ActionsType } from '../../store';
+import { ThunkDispatchType } from '../../store';
 import { apiAddProduct } from '../../store/products/operations';
-import { ThunkDispatch } from 'redux-thunk';
 import { Alert } from 'react-native';
 
 const AddProductScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch<ThunkDispatch<AppState, any, ActionsType>>();
+  const dispatch = useDispatch<ThunkDispatchType>();
 
   const submitHandler = (formState: IFormState) => {
     dispatch(

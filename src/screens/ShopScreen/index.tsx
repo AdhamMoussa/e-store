@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
 
 import ProductItem from '../../components/ProductItem';
 import HeaderButtonCart from '../../components/HeaderButtonCart';
 import HeaderButtonMenu from '../../components/HeaderButtonMenu';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-import { AppState, ActionsType } from '../../store';
+import { AppState, ThunkDispatchType } from '../../store';
 import { addToCart } from '../../store/cart/actions';
 import { apiGetProducts } from '../../store/products/operations';
 
@@ -23,7 +22,7 @@ const ShopScreen: NavigationStackScreenComponent = ({ navigation }) => {
 
   const { productList } = useSelector((state: AppState) => state.products);
 
-  const dispatch = useDispatch<ThunkDispatch<AppState, any, ActionsType>>();
+  const dispatch = useDispatch<ThunkDispatchType>();
 
   const navigateToProductScreen = (product: Product): void => {
     navigation.navigate({

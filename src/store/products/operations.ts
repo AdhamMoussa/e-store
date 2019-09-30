@@ -1,22 +1,15 @@
-import { ThunkAction } from 'redux-thunk';
-
 import { api } from '../../utils/axiosInstance';
 import { getProducts, addProduct, editProduct, deleteProduct } from './actions';
 
-import { IProductsAction, IProductUserInput } from './types';
+import { IProductUserInput } from './types';
 import { Product } from '../../models/product';
-import { AppState } from '..';
+import { ThunkActionType } from '..';
 
 interface IAPIProducts {
   [key: string]: IProductUserInput;
 }
 
-export const apiGetProducts = (): ThunkAction<
-  Promise<void>,
-  AppState,
-  null,
-  IProductsAction
-> => async dispatch => {
+export const apiGetProducts = (): ThunkActionType => async dispatch => {
   const res = await api().get<IAPIProducts>('/products.json');
 
   const productList: Product[] = [];
@@ -34,12 +27,7 @@ export const apiGetProducts = (): ThunkAction<
 
 export const apiAddProduct = (
   product: IProductUserInput
-): ThunkAction<
-  Promise<void>,
-  AppState,
-  null,
-  IProductsAction
-> => async dispatch => {
+): ThunkActionType => async dispatch => {
   const res = await api().post<{
     name: string;
   }>('/products.json', { ...product });
@@ -57,12 +45,7 @@ export const apiAddProduct = (
 
 export const apiEditProduct = (
   product: Product
-): ThunkAction<
-  Promise<void>,
-  AppState,
-  null,
-  IProductsAction
-> => async dispatch => {
+): ThunkActionType => async dispatch => {
   await api().patch(`/products/${product.id}.json`, <IProductUserInput>{
     title: product.title,
     description: product.description,
@@ -75,12 +58,7 @@ export const apiEditProduct = (
 
 export const apiDeleteProduct = (
   id: Product['id']
-): ThunkAction<
-  Promise<void>,
-  AppState,
-  null,
-  IProductsAction
-> => async dispatch => {
+): ThunkActionType => async dispatch => {
   await api().delete(`/products/${id}.json`);
 
   dispatch(deleteProduct(id));

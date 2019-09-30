@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { View, FlatList, Alert } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
 
 import CartItem from '../../components/CartItem';
 import CartItemTotals from '../../components/CartItemTotals';
 import EmptyMsg from '../../components/EmptyMsg';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-import { AppState, ActionsType } from '../../store';
+import { AppState, ThunkDispatchType } from '../../store';
 import { removeFromCart, clearCart } from '../../store/cart/actions';
 import { apiAddOrder } from '../../store/orders/operations';
 import { ICartItem } from '../../store/cart/types';
@@ -23,7 +22,7 @@ const CartScreen: NavigationStackScreenComponent = ({ navigation }) => {
 
   const { cartList } = useSelector((state: AppState) => state.cart);
 
-  const dispatch = useDispatch<ThunkDispatch<AppState, null, ActionsType>>();
+  const dispatch = useDispatch<ThunkDispatchType>();
 
   const totalCartAmount: number = cartList.reduce(
     (a: number, b: ICartItem): number => a + b.product.price * b.qty,
