@@ -1,16 +1,45 @@
-import React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, Alert } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import OrderItem from '../../components/OrderItem';
 import EmptyMsg from '../../components/EmptyMsg';
 import HeaderButtonMenu from '../../components/HeaderButtonMenu';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
-import { AppState } from '../../store';
+import { AppState, ThunkDispatchType } from '../../store';
+import { apiGetOrders } from '../../store/orders/operations';
 
 const OrdersScreen: NavigationStackScreenComponent = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const dispatch = useDispatch<ThunkDispatchType>();
+
   const { orderList } = useSelector((state: AppState) => state.orders);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    dispatch(apiGetOrders())
+      .then(() => {
+        setIsLoading(false);
+      })
+
+      .catch(() => {
+        setError('Error... pull to refresh!');
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return <Text>{error}</Text>;
+  }
 
   if (orderList.length === 0) {
     return <EmptyMsg>No Orders yet...</EmptyMsg>;

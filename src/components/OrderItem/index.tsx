@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableNativeFeedback,
-  Image,
-  Button,
-  FlatList
-} from 'react-native';
+import { View, Text, TouchableNativeFeedback, FlatList } from 'react-native';
 import * as dateFns from 'date-fns';
 
 import { IOrder } from '../../store/orders/types';
-
-import { defaultTheme } from '../../utils/themes';
 
 import { styles } from './styles';
 

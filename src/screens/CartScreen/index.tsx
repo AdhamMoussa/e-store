@@ -38,7 +38,7 @@ const CartScreen: NavigationStackScreenComponent = ({ navigation }) => {
 
     dispatch(
       apiAddOrder({
-        date: new Date(),
+        date: new Date().getTime(),
         items: cartList,
         totalPrice: totalCartAmount
       })

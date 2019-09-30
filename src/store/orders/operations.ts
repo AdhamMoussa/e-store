@@ -1,7 +1,26 @@
-import { IPartialOrder } from './types';
+import { IPartialOrder, IOrder } from './types';
 import { ThunkActionType } from '..';
 import { api } from '../../utils/axiosInstance';
-import { addOrder } from './actions';
+import { addOrder, getOrders } from './actions';
+
+interface IAPIOrders {
+  [key: string]: IPartialOrder;
+}
+
+export const apiGetOrders = (): ThunkActionType => async dispatch => {
+  const { data } = await api().get<IAPIOrders>('/orders.json');
+
+  const orderList: IOrder[] = [];
+
+  for (const key in data) {
+    orderList.push({
+      id: key,
+      ...data[key]
+    });
+  }
+
+  dispatch(getOrders(orderList));
+};
 
 export const apiAddOrder = (
   order: IPartialOrder
