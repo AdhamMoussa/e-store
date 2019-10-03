@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Alert } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -19,7 +19,7 @@ const OrdersScreen: NavigationStackScreenComponent = () => {
 
   const { orderList } = useSelector((state: AppState) => state.orders);
 
-  useEffect(() => {
+  const getOrders = () => {
     setIsLoading(true);
 
     dispatch(apiGetOrders())
@@ -31,6 +31,10 @@ const OrdersScreen: NavigationStackScreenComponent = () => {
         setError('Error... pull to refresh!');
         setIsLoading(false);
       });
+  };
+
+  useEffect(() => {
+    getOrders();
   }, []);
 
   if (isLoading) {
@@ -48,6 +52,8 @@ const OrdersScreen: NavigationStackScreenComponent = () => {
   return (
     <View>
       <FlatList
+        refreshing={isLoading}
+        onRefresh={getOrders}
         data={orderList}
         renderItem={({ item }) => <OrderItem order={item} />}
         keyExtractor={({ id }) => id}

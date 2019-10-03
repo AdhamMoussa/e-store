@@ -35,9 +35,7 @@ const ShopScreen: NavigationStackScreenComponent = ({ navigation }) => {
     dispatch(addToCart(product));
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-
+  const getProducts = () => {
     dispatch(apiGetProducts())
       .then(() => {
         setIsLoading(false);
@@ -47,6 +45,12 @@ const ShopScreen: NavigationStackScreenComponent = ({ navigation }) => {
         setIsLoading(false);
         setError("Couldn't fetch products. try again..!!");
       });
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    getProducts();
   }, []);
 
   if (isLoading) {
@@ -60,6 +64,8 @@ const ShopScreen: NavigationStackScreenComponent = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <FlatList
+        onRefresh={getProducts}
+        refreshing={isLoading}
         data={productList}
         renderItem={({ item }) => (
           <ProductItem

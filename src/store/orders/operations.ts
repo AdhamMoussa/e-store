@@ -8,7 +8,7 @@ interface IAPIOrders {
 }
 
 export const apiGetOrders = (): ThunkActionType => async dispatch => {
-  const { data } = await api().get<IAPIOrders>('/orders.json');
+  const { data } = await api().get<IAPIOrders>('/orders/u1.json');
 
   const orderList: IOrder[] = [];
 
@@ -25,7 +25,7 @@ export const apiGetOrders = (): ThunkActionType => async dispatch => {
 export const apiAddOrder = (
   order: IPartialOrder
 ): ThunkActionType => async dispatch => {
-  const { data } = await api().post<{ name: string }>('/orders.json', {
+  const { data } = await api().post<{ name: string }>('/orders/u1.json', {
     ...order
   });
 
