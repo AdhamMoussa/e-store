@@ -3,7 +3,7 @@ import { View, Text, Image, Button } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useDispatch } from 'react-redux';
 
-import HeaderButtonCart from '../../components/HeaderButtonCart';
+import HeaderButtonRight from '../../components/HeaderButtonRight';
 
 import { addToCart } from '../../store/cart/actions';
 
@@ -49,7 +49,7 @@ ProductScreen.navigationOptions = navProps => {
     headerTitle: product.title,
 
     headerRight: (
-      <HeaderButtonCart
+      <HeaderButtonRight
         onPress={() => {
           navProps.navigation.navigate({
             routeName: 'Cart'

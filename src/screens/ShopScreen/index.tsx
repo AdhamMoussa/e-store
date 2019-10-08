@@ -4,7 +4,7 @@ import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ProductItem from '../../components/ProductItem';
-import HeaderButtonCart from '../../components/HeaderButtonCart';
+import HeaderButtonRight from '../../components/HeaderButtonRight';
 import HeaderButtonMenu from '../../components/HeaderButtonMenu';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
@@ -88,7 +88,7 @@ ShopScreen.navigationOptions = navProps => ({
   headerTitle: 'All Products',
 
   headerRight: (
-    <HeaderButtonCart
+    <HeaderButtonRight
       onPress={() => {
         navProps.navigation.navigate({
           routeName: 'Cart'
